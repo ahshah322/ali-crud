@@ -1,0 +1,69 @@
+﻿@*
+    Here List is getting all the data(list of all data) from database student table
+*@
+@model List<Ali_CRUD.Context.tbl_Student>
+
+@{
+    ViewBag.Title = "StudentList";
+}
+
+<h2 class="text-center mt-5">Student List</h2>
+@*
+    Action link to go and add new student
+*@
+<h3>@Html.ActionLink("Add Student", "Student", "Student")</h3>
+
+<table class="table table-bordered table-dark">
+    <thead class="thead-dark">
+        <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>FName</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @*
+            A local veriable counter is used for table series numbering.
+        *@
+        @{ int counter = 1; }
+
+        @*
+            Here foreach loop will access all students one by one and and store in std (Student) variable.
+             std.Name = Ali_CRUD.Context.tbl_Student.Name
+        *@
+        @{ foreach (var std in Model)
+            {
+                <tr>
+                    <td>@counter</td>
+                    <td>@std.Name</td>
+                    <td>@std.Fname</td>
+                    <td>@std.Email</td>
+                    <td>@std.Mobile</td>
+                    <td>@std.Description</td>
+                    <td>
+                        @*
+                            Url.Action helper method take two values
+                            1) action method i.e Student
+                            2) Object which contains student Id, Name, Fname, Email, Mobile, Description and sent as object.
+                        *@
+                        <a href="@Url.Action("Student", new { std.Id, std.Name, std.Fname, std.Email, std.Mobile, std.Description })" class="btn btn-primary">Edit</a>
+                        @*<a href="#"><i class="glyphicon glyphicon-pencil"></i></a>*@
+
+                        @*
+                            Url.Action helper method take two values
+                            1) action method i.e Delete
+                            2) Object which contains student Id.
+                        *@
+                        <a href="@Url.Action("Delete", new { std.Id })" class="btn btn-danger">Delete</a>
+                        @*<a href="#"><i class="glyphicon glyphicon-trash"></i></a>*@
+                    </td>
+                </tr>
+                counter++;
+            }
+        }
+    </tbody>
+</table>
